@@ -1,0 +1,27 @@
+.profile-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 2px;
+    object-fit: cover;
+    
+
+    border: 1px solid rgba(37,37,37,0.7);
+    background: rgba(26,26,26,0.25);
+
+    box-shadow:
+        0 4px 10px rgba(0,0,0,0.4),
+        0 0 3px rgba(255,255,255,0.05) inset;
+}
+
+.profile-trigger {
+    padding: 0.25rem 0.5rem;
+}
+
+.profile-dropdown .dropdown-menu {
+    right: 0;
+    left: auto;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}

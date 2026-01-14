@@ -1,0 +1,181 @@
+
+h1{
+    justify-self: center;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: 650;
+}
+
+.scoreboard {
+    position: relative; /* REQUIRED */
+    width: 100%;
+    max-width: 1000px;
+    margin: auto auto 40px auto;
+
+    border-collapse: collapse;
+
+    background: rgba(26,26,26,0.25);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5),
+                0 0 5px rgba(255,255,255,0.05) inset;
+
+    border: 1px solid rgba(26,26,26,0.2);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.scoreboard::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-image: url(/assets/images/noise.svg);
+    background-repeat: repeat;
+    background-size: 50px 50px;
+    
+
+    opacity: 0.7;
+    pointer-events: none;
+
+    mix-blend-mode: overlay;
+}
+
+.scoreboard thead {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.scoreboard th {
+    padding: 16px 20px;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.scoreboard td {
+    padding: 14px 20px;
+    font-size: 0.95rem;
+    color: rgba(228, 228, 228, 0.9);
+    
+}
+
+.scoreboard tr:hover{
+    color: rgb(255, 255, 255);
+    text-shadow: 0 0 8px rgb(255, 255, 255);
+}
+
+.scoreboard tbody tr {
+    transition:
+        background-color 0.15s ease,
+        box-shadow 0.25s ease;
+}
+
+/* I. */
+.scoreboard tbody tr:nth-child(1) {
+    background: rgba(255, 215, 0, 0.1);
+}
+.scoreboard tbody tr:nth-child(1):hover {
+    background: rgba(255, 215, 0, 0.3);
+}
+
+/* II. */
+.scoreboard tbody tr:nth-child(2) {
+    background: rgba(192, 192, 192, 0.1);
+}
+.scoreboard tbody tr:nth-child(2):hover {
+    background: rgba(192, 192, 192, 0.3);
+}
+
+/* III. */
+.scoreboard tbody tr:nth-child(3) {
+    background: rgba(205, 127, 50, 0.1);
+}
+.scoreboard tbody tr:nth-child(3):hover {
+    background: rgba(205, 127, 50, 0.3);
+}
+
+.scoreboard tbody tr:hover {
+    background: rgba(84, 84, 84, 0.5);
+    
+    
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2), 0 0 5px rgba(255,255,255,0.05) inset;
+    
+}
+
+.profile-link {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.profile-link:hover {
+    opacity: 1;
+    text-decoration:underline;
+}
+
+.score-upload {
+    width: 600px;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.score-upload h2 {
+    margin: 0 0 4px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.score-input {
+    padding: 12px 14px;
+    border-radius: 5px;
+    border: 1px solid rgba(25, 227, 35, 0.15);
+
+    background: rgba(20, 20, 20, 0.35);
+    color: inherit;
+
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5), 0 0 5px rgba(255,255,255,0.05) inset;
+}
+
+.score-input::placeholder {
+    color: rgb(199, 199, 199);
+    opacity: 1;
+}
+
+.score-submit {
+    margin-top: 8px;
+    padding: 12px;
+    border-radius: 5px;
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(108, 108, 108, 0.15);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5), 0 0 5px rgba(255,255,255,0.05) inset;
+
+    color: rgb(199, 199, 199);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.score-submit:hover {
+    background: rgba(108, 108, 108, 0.55);
+    color: white;
+    text-shadow: 0 0 8px #ffffff;
+}
+
+.score-hint {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+    opacity: 0.75;
+}
+
+

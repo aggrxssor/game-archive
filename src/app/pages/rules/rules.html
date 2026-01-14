@@ -1,0 +1,17 @@
+<div class="rules-page">
+    <div class="rules-card glass-card" *ngIf="rules; else noRules">
+        
+        <h1>{{ rules.title }}</h1>
+        
+        <div class="rules-section" *ngFor="let section of rules.sections">
+            <h2>{{ section.heading }}</h2>
+            <p>{{ section.content }}</p>
+        </div>
+        
+    </div>
+    
+    <ng-template #noRules>
+        <h1>Rules not found</h1>
+        <p>No rules are available for this game.</p>
+    </ng-template>
+</div>

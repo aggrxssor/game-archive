@@ -1,4 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { Component, HostListener, signal } from '@angular/core';
+import { Auth } from './services/auth';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +7,33 @@ import { Component, signal } from '@angular/core';
   standalone: false,
   styleUrl: './app.css'
 })
+  
 export class App {
-  protected readonly title = signal('game-archive');
+  showBackToTop = false;
+
+  @HostListener('window:scroll')
+  onScroll(): void {
+    this.showBackToTop = window.scrollY > 300;
+  }
+
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  constructor(public auth: Auth) {}
 }
+
+
+  /* soundEnabled: boolean | null = null;
+
+  enableSound(): void {
+    this.soundEnabled = true;
+  }
+
+  disableSound(): void {
+    this.soundEnabled = false;
+  } */
+  
+
+
+

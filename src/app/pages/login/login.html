@@ -1,0 +1,37 @@
+<div class="login-page">
+    <div class="glass-card login-card">
+
+        <h1>Login</h1>
+
+        <input
+        type="email"
+        placeholder="E-mail"
+        class="login-input"
+        [(ngModel)]="email"
+        />
+
+        <input
+        type="password"
+        placeholder="Password"
+        class="login-input"
+        [(ngModel)]="password"
+        />
+
+        <div class="validation-warning" *ngIf="validationError ||  authError">
+            <span class="warning-icon">⚠</span>
+            <span class="warning-text">{{ validationError || authError }}</span>
+        </div>
+        <button
+            class="login-btn"
+            [class.error-flash]="flashError"
+            (click)="login()">
+            Login
+        </button>
+
+        <p class="register-hint">
+        Don’t have an account yet?
+        <a routerLink="/register">Register</a>
+        </p>
+
+    </div>
+</div>

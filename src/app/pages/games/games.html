@@ -1,0 +1,49 @@
+<div class="game-page">
+
+  <!-- FULLSCREEN GAME MODE -->
+  <ng-container *ngIf="game?.id === 'tron' && auth.isLoggedIn; else normalPage">
+    <div class="game-stage">
+      <app-tron></app-tron>
+    </div>
+  </ng-container>
+
+  <!-- NORMAL WEBSITE MODE -->
+  <ng-template #normalPage>
+
+    <div *ngIf="game; else noGame">
+
+      <h1>{{ game.title }}</h1>
+      <p>{{ game.description }}</p>
+
+      <div class="game-pg-btn">
+        <a class="btn view-rules-btn" [routerLink]="['/rules', game.id]">
+          View Rules
+        </a>
+
+        <a
+          *ngIf="game.type === 'downloadable' && game.downloadUrl"
+          [href]="game.downloadUrl"
+          target="_blank"
+          rel="noopener"
+          class="btn download-btn"
+          (click)="onDownloadClick($event)">
+          {{ auth.isLoggedIn ? 'Download' : 'Login to download' }}
+        </a>
+      </div>
+
+      <ng-container *ngIf="game.type === 'browser'">
+        <div *ngIf="!auth.isLoggedIn" class="login-gate">
+          <p>You need to be logged in to play this game.</p>
+        </div>
+      </ng-container>
+
+    </div>
+
+    <ng-template #noGame>
+      <h1>Game not found</h1>
+      <button class="request-hint" routerLink="/request">Request a game</button>
+    </ng-template>
+
+  </ng-template>
+
+</div>

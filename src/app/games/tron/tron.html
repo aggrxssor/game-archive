@@ -1,0 +1,44 @@
+<div class="tron-root" (click)="bootGame()">
+    <div class="glass-shelf">    
+        <canvas #gameCanvas></canvas>
+
+        <div class="overlay" *ngIf="phase === 'load'">
+            <h1>TRON</h1>
+            <h3>Click to continue game</h3>
+        </div>
+
+        <div class="overlay" *ngIf="phase === 'newMatch'">
+            <h2>TRON</h2>
+            <p class="player1">Player 1: WASD</p>
+            <p class="player2">Player 2: Arrow keys</p>
+            <p>Both players must press a key to start
+        </div>
+
+        <div class="overlay" *ngIf="phase === 'countdown'">
+            <h1>{{ countdown }}</h1>
+        </div>
+
+        <div class="overlay" *ngIf="phase === 'waiting'">
+            <p class="player1">Player 1: WASD</p>
+            <p class="player2">Player 2: Arrow keys</p>
+            <p>Both players must press a key to continue</p>
+        </div>
+
+        <div class="overlay" *ngIf="phase === 'roundOver'">
+            <h2 *ngIf="winner === 0">Draw</h2>
+            <h2 *ngIf="winner === 1" class="player1">Player 1 wins</h2>
+            <h2 *ngIf="winner === 2" class="player2">Player 2 wins</h2>
+            <h3>Press Space to continue</h3>
+        </div>
+
+        <div class="overlay" *ngIf="phase === 'gameover'">
+            <h2 *ngIf="winner === 0">Draw</h2>
+            <h2 *ngIf="winner === 1" class="player1">Player 1 wins</h2>
+            <h2 *ngIf="winner === 2" class="player2">Player 2 wins</h2>
+            
+            <button (click)="restart(); phase='newMatch'; $event.stopPropagation()">
+                Next match
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,152 @@
+.login-page {
+    min-height: calc(100vh - 160px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 32px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+
+
+
+
+
+.glass-card {
+    border: 1px solid rgba(37, 37, 37, 0.733);
+    border-radius: 2px;
+
+    background: rgba(26, 26, 26, 0.15);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+
+    background-image: url(/assets/images/noise.svg);
+    background-repeat: repeat;
+    background-blend-mode: overlay;
+
+    box-shadow:
+        0 10px 20px rgba(0, 0, 0, 0.5),
+        0 0 5px rgba(255, 255, 255, 0.05) inset;
+
+    color: rgb(199, 199, 199);
+}
+
+
+
+
+
+
+.login-input {
+    padding: 12px 14px;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    background: rgba(20, 20, 20, 0.35);
+    color: inherit;
+
+    box-shadow:
+        0 10px 20px rgba(0, 0, 0, 0.5),
+        0 0 5px rgba(255, 255, 255, 0.05) inset;
+}
+
+.login-input::placeholder {
+    color: rgb(199, 199, 199);
+}
+
+.login-input:hover {
+    background: rgba(20, 20, 20, 0.75);
+}
+
+
+
+
+
+.login-btn {
+    margin-top: 8px;
+    padding: 12px;
+    border-radius: 5px;
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(108, 108, 108, 0.15);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+
+    box-shadow:
+        0 10px 20px rgba(0, 0, 0, 0.5),
+        0 0 5px rgba(255, 255, 255, 0.05) inset;
+
+    color: rgb(199, 199, 199);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    background: rgba(108, 108, 108, 0.55);
+    transform: scale(1.05);
+    color: white;
+    text-shadow: 0 0 8px #ffffff;
+}
+
+
+
+
+
+.register-hint {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+    opacity: 0.75;
+}
+
+.register-hint a {
+    margin-left: 4px;
+    text-decoration: underline;
+    color: rgb(225, 225, 225);
+}
+
+.register-hint a:hover {
+    color: white;
+    text-shadow: 0 0 10px #ffffff;
+}
+
+
+
+
+
+.validation-warning {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ff6b6b;
+    font-size: 0.9rem;
+    margin-top: 6px;
+}
+
+.warning-icon {
+    font-size: 1.1rem;
+}
+
+
+
+
+
+.error-flash {
+    animation: flashRed 0.25s ease;
+}
+
+@keyframes flashRed {
+    0%   { background: rgba(255, 0, 0, 0.55); }
+    25%  { background: rgba(108, 108, 108, 0.15); }
+    50%  { background: rgba(255, 0, 0, 0.55); }
+    100% { background: rgba(108, 108, 108, 0.15); }
+}
+

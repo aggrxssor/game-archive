@@ -1,0 +1,103 @@
+<nav class="glass-nav navbar navbar-expand-lg">
+    <div class="container-fluid">
+        
+        <a class="navbar-brand nav-text" routerLink="/home">Home</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+            
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown nav-text" id="dropdownMenu" role="button" data-bs-toggle="dropdown">
+                        Games
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                        <li><a class="dropdown-item" routerLink="/games/tron">Tron</a></li>
+                        <li><a class="dropdown-item" routerLink="/games/chess">Chess (.exe)</a></li>
+                        <li><a class="dropdown-item" routerLink="/games/spaceshooter">Space Shooter (.exe)</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    
+                    <a class="nav-link dropdown nav-text" role="button" data-bs-toggle="dropdown">Rules</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" routerLink="/rules/tron">Tron</a></li>
+                        <li><a class="dropdown-item" routerLink="/rules/chess">Chess (.exe)</a></li>
+                        <li><a class="dropdown-item" routerLink="/rules/spaceshooter">Space Shooter (.exe)</a></li>
+                    </ul> 
+                </li>
+
+            </ul>
+
+            <form class="d-flex mx-auto" role="search">
+                <input class="form-control search-bar nav-text" type="search" placeholder="Search..." aria-label="Search">
+            </form>
+
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link nav-text dropdown" routerLink="/scoreboard" data-bs-toggle="dropdown">
+                        Leaderboards
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                        <li><a class="dropdown-item" routerLink="/scoreboard">Space Shooter</a></li>
+                        <li>
+                            <button class="auth-toggle"
+                                    (click)="auth.toggle()">
+                                    {{ auth.isLoggedIn ? 'Log out (dev)' : 'Log in (dev)' }}
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+
+                <!--  prof pic dropdown -->
+                <li class="nav-item dropdown profile-dropdown">
+                    <a
+                        class="nav-link profile-trigger"
+                        role="button" 
+                        href="#"
+                        (click)="onProfileClick($event)"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <img [src]="'assets/images/avatars/' + avatar" alt="User" class="profile-avatar"/>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+
+                        <!-- --- logged out---  -->
+                        <ng-container *ngIf="!auth.isLoggedIn">
+                            <li>
+                                <a class="dropdown-item" href="#" routerLink="/login">Login</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#" routerLink="/register">Sign up</a>
+                            </li>
+                        </ng-container>
+
+                        <!-- --- logged in --- -->
+                        <ng-container *ngIf="auth.isLoggedIn">
+                            <li>
+                                <a class="dropdown-item" (click)="goToProfile()">
+                                View profile
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" (click)="goToUploadScore()">
+                                Upload a score
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" (click)="logout()">
+                                Log out
+                                </a>
+                            </li>
+                        </ng-container>
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

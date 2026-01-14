@@ -1,0 +1,52 @@
+<div class="scoreboard-page">
+
+    <h1>Space Shooter Leaderboard</h1>
+
+    <div class="scoreboard-layout">
+
+        <table class="scoreboard">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Player</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let entry of scores; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td> <a class="profile-link" [routerLink]="['/profiles', entry.username]">{{ entry.username }}</a>
+                    </td>
+                    <td>{{ entry.score }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="score-upload scoreboard">
+
+            <h2>Submit score</h2>
+
+            <input
+                #scoreInput
+                type="text"
+                class="score-input"
+                placeholder="Your score"
+            />
+
+            <button
+                class="score-submit"
+                (click)="submitEncodedScore(scoreInput)">
+                {{ auth.isLoggedIn ? 'Submit' : 'Login to submit' }}
+            </button>
+
+            <p class="score-hint">
+                {{ auth.isLoggedIn
+                    ? 'Submit your score to the leaderboard.'
+                    : 'You must be logged in to submit a score.' }}
+            </p>
+
+        </div>
+
+    </div>
+</div>

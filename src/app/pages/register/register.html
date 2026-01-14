@@ -1,0 +1,53 @@
+<div class="register-page">
+
+    <div class="glass-card register-card">
+
+        <h1>Register</h1>
+
+        <input
+        type="email"
+        class="register-input"
+        placeholder="Email"
+        [(ngModel)]="email"
+        />
+
+        <input
+        type="text"
+        placeholder="Username"
+        class="register-input"
+        [(ngModel)]="username"
+        />
+
+        <input
+        type="password"
+        class="register-input"
+        placeholder="Password"
+        [(ngModel)]="password"
+        />
+
+        <input
+        type="password"
+        placeholder="Confirm password"
+        class="register-input"
+        [(ngModel)]="confirmPassword"
+        />
+
+        <div class="validation-warning" *ngIf="validationError">
+            <span class="warning-icon">⚠</span>
+            <span class="warning-text">{{ validationError }}</span>
+        </div>
+        <button
+            class="register-btn"
+            [class.error-flash]="flashError"
+            (click)="register()">
+            Register
+        </button>
+
+        <p class="login-hint">
+        Already have an account?
+        <a routerLink="/login">Login</a>
+        </p>
+
+    </div>
+
+</div>

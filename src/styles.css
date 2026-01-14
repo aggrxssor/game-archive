@@ -1,1 +1,425 @@
-/* You can add global styles to this file, and also import other style files */
+/* =============================== global ================================== */
+
+app-root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+
+    color: white;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    position: relative;
+
+    background-image: url("./assets/images/homepage_bg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat;
+}
+
+main {
+    flex: 1;
+
+    padding: 60px 10px 0 10px;
+}
+
+/* =============================== hang popup =============================== */
+
+.sound-popup {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(6px);
+
+    z-index: 9999;
+}
+
+.sound-modal {
+    padding: 2rem;
+
+    border-radius: 12px;
+
+    background: rgba(30,30,30,0.8);
+
+    text-align: center;
+}
+
+/* =============================== nav ===================================== */
+
+.glass-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+
+    border-radius: 0;
+    border-bottom: 1px solid rgba(26,26,26,0.25);
+
+    background: rgba(26,26,26,0.25);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+
+    background-image: url(./assets/images/noise.svg);
+    background-repeat: repeat;
+    background-size: 50px 50px;
+    background-blend-mode: overlay;
+
+    box-shadow: 
+        0 10px 20px rgba(0,0,0,0.2),
+        0 0 5px rgba(255,255,255,0.05) inset;
+
+    transition:
+        background 0.1s ease,
+        color 0.1s ease,
+        box-shadow 0.1s ease;
+}
+
+.nav-text {
+    font-size: 20px;
+
+    color: rgb(199,199,199);
+}
+
+.nav-text:hover {
+    color: rgb(255,255,255);
+    text-shadow: 0 0 8px rgba(255,255,255,1);
+}
+
+.navbar .dropdown-menu {
+    top: 100%;
+    margin-top: 8px;
+}
+
+.dropdown-menu {
+    min-width: auto;
+    pointer-events: auto;
+
+    border: 1px solid rgba(26,26,26,0.2);
+    border-radius: 1px;
+
+    background: rgba(26,26,26,0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(5px);
+
+    background-image: url(./assets/images/noise.svg);
+    background-repeat: repeat;
+    background-size: 50px 50px;
+    background-blend-mode: overlay;
+
+    box-shadow:
+        0 10px 20px rgba(0,0,0,0.2),
+        0 0 5px rgba(255,255,255,0.05) inset;
+}
+
+.navbar .dropdown:hover .dropdown-menu,
+.navbar .dropdown-menu:hover {
+    display: block;
+}
+
+.navbar .dropdown-menu::before {
+    content: '';
+
+    position: absolute;
+    top: -10px;
+    left: 0;
+    right: 0;
+
+    height: 10px;
+}
+
+.dropdown-item {
+    color: rgb(141,141,141);
+}
+
+.dropdown-item:hover {
+    background: rgba(27,27,27,0.85);
+
+    color: rgb(255,255,255);
+    text-shadow: 0 0 8px rgba(255,255,255,1);
+
+    box-shadow:
+        0 10px 20px rgba(0,0,0,0.2),
+        0 0 5px rgba(255,255,255,0.05) inset;
+
+    overflow: hidden;
+}
+
+.navbar-collapse {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.search-bar {
+    border-radius: 1px;
+    border: 1px solid rgba(138,138,138,0.2);
+
+    background: rgba(26,26,26,0.25);
+
+    color: white;
+}
+
+.search-bar::placeholder {
+    color: #ddd;
+}
+
+@media (min-width: 992px) {
+    .dropdown:hover > .dropdown-menu {
+        display: block;
+    }
+}
+
+/* ================================ csempe ===================================== */
+
+.centre-tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 300px));
+    gap: 2rem;
+
+    max-width: 1300px;
+    margin: auto;
+    padding-bottom: 15px;
+
+    justify-content: center;
+}
+
+.card-style {
+    z-index: 2;
+
+    width: 300px;
+    height: 500px;
+
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid rgba(37,37,37,0.733);
+    border-radius: 2px;
+
+    background: rgba(26,26,26,0.25);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(5px);
+
+    background-image: url(./assets/images/noise.svg);
+    background-repeat: repeat;
+    background-size: 50px 50px;
+    background-blend-mode: overlay;
+
+    box-shadow:
+        0 10px 20px rgba(0,0,0,0.5),
+        0 0 5px rgba(255,255,255,0.05) inset;
+
+    color: rgb(199,199,199);
+    font-size: 30px;
+
+    cursor: pointer;
+    overflow: hidden;
+
+    transition:
+        background 0.1s ease,
+        color 0.1s ease,
+        transform 0.1s ease,
+        box-shadow 0.5s ease;
+}
+
+.card-style::before {
+    content: '';
+
+    position: absolute;
+    inset: 0;
+
+    background-size: cover;
+    background-position: center;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.3s ease;
+}
+
+.card-style::after {
+    content: '';
+
+    position: absolute;
+    bottom: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 150%;
+    height: 90%;
+
+    background: linear-gradient(to top, rgba(255,255,255,0.5), rgba(255,255,255,0));
+    filter: blur(20px);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.card-style:hover {
+    transform: translateY(-15px) scale(1.015);
+
+    background: rgba(26,26,26,0.15);
+    background-image: url(./assets/images/noise.svg);
+    background-repeat: repeat;
+    background-size: 50px 50px;
+    background-blend-mode: overlay;
+
+    color: rgb(255,255,255);
+    text-shadow: 0 0 8px #fff;
+
+    box-shadow:
+        0 10px 20px rgba(0,0,0,0.5),
+        0 0 5px rgba(255,255,255,0.05);
+}
+
+.card-style:hover::before {
+    opacity: 0.6;
+}
+
+.card-style.tron::before {
+    background-image: url("./assets/images/tron-thumbnail.png"), url("./assets/images/noise.svg");
+}
+
+.card-style.chess::before {
+    background-image: url("./assets/images/chess-thumbnail.png"), url("./assets/images/noise.svg");
+}
+
+.card-style.spaceshooter::before {
+    background-image: url("./assets/images/spaceshooter-thumbnail.png"), url("./assets/images/noise.svg");
+}
+
+.card-style.request::before {
+    background-image: url("./assets/images/request.jpg"), url("./assets/images/noise.svg");
+}
+
+.card-style:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-10px);
+    animation: tealPulse 5s infinite alternate;
+}
+
+@keyframes tealPulse {
+    0%   { transform: translateX(-50%) translateY(-8px);  opacity: 1; }
+    20%  { transform: translateX(-50%) translateY(-12px); opacity: 0.4; }
+    40%  { transform: translateX(-50%) translateY(-12px); opacity: 0.8; }
+    60%  { transform: translateX(-50%) translateY(-12px); opacity: 0.6; }
+    80%  { transform: translateX(-50%) translateY(-10px); opacity: 1; }
+    100% { transform: translateX(-50%) translateY(-10px); opacity: 0.5; }
+}
+
+#addGame {
+    font-size: 100px;
+}
+
+/* ================================ lab ==================================== */
+
+.glass-footer {
+    position: relative;
+
+    width: 100%;
+
+    border-top: 1px solid rgba(26,26,26,0.25);
+    border-radius: 0;
+
+    background: rgba(26,26,26,0.25);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+
+    background-image: url(./assets/images/noise.svg);
+    background-repeat: repeat;
+    background-size: cover;
+    background-blend-mode: overlay;
+
+    box-shadow:
+        0 -10px 10px rgba(0,0,0,0.2),
+        0 0 5px rgba(255,255,255,0.05) inset;
+
+    transition:
+        background 0.1s ease,
+        color 0.1s ease,
+        box-shadow 0.1s ease;
+}
+
+.footer-link {
+    font-size: 0.95rem;
+
+    color: rgb(199,199,199);
+    text-decoration: none;
+
+    transition: 0.2s;
+}
+
+.footer-link:hover {
+    color: rgb(255,255,255);
+    text-shadow: 0 0 8px #fff;
+}
+
+/* =============================== BACK2TOP ================================== */
+
+.back-to-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 2000;
+
+    width: 48px;
+    height: 48px;
+
+    border-radius: 2px;
+    border: 1px solid rgba(37,37,37,0.7);
+
+    background: rgba(26,26,26,0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    background-image: url(/assets/noise.svg);
+    background-repeat: repeat;
+    background-size: 50px 50px;
+    background-blend-mode: overlay;
+
+    color: white;
+    font-size: 22px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 20px rgba(0,0,0,0.4),
+        0 0 5px rgba(255,255,255,0.05) inset;
+
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease,
+        box-shadow 0.2s ease;
+}
+
+.back-to-top:hover {
+    transform: translateY(-4px);
+
+    background: rgba(26,26,26,0.25);
+
+    box-shadow:
+        0 15px 25px rgba(0,0,0,0.5),
+        0 0 6px rgba(255,255,255,0.07) inset;
+
+    text-shadow: 0 0 8px rgb(255,255,255);
+}
