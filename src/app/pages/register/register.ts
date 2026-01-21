@@ -72,6 +72,7 @@ export class Register {
       email: this.email.trim().toLowerCase(),
       password: this.password,
       joined: new Date().toISOString(),
+      isAdmin: false, // komment /////////////////////////////////////////
     };
 
     this.localUsers.add(user);

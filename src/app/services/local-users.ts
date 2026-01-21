@@ -5,6 +5,7 @@ export interface LocalAuthUser {
   email: string;
   password: string;
   joined: string;
+  isAdmin: boolean;
 }
 
 

@@ -2,6 +2,7 @@
 
     <h1>Space Shooter Leaderboard</h1>
 
+
     <div class="scoreboard-layout">
 
         <table class="scoreboard">
@@ -10,18 +11,42 @@
                     <th>#</th>
                     <th>Player</th>
                     <th>Score</th>
+                    <th *ngIf="auth.isAdmin">Delete score</th>
                 </tr>
             </thead>
 
             <tbody>
                 <tr *ngFor="let entry of scores; let i = index">
                     <td>{{ i + 1 }}</td>
-                    <td> <a class="profile-link" [routerLink]="['/profiles', entry.username]">{{ entry.username }}</a>
+
+                    <td>
+                        <a class="profile-link" [routerLink]="['/profiles', entry.username]">
+                        {{ entry.username }}
+                        </a>
                     </td>
+
                     <td>{{ entry.score }}</td>
+
+                    <td *ngIf="auth.isAdmin">
+                        <button
+                        class="delete-score"
+                        (click)="onDeleteClick(entry)">
+                        delete
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>
+
+        <div class="undo-banner" *ngIf="lastDeleted">
+            <span>
+                Score deleted.
+            </span>
+
+            <button (click)="undoDelete()">
+                Undo
+            </button>
+        </div>
 
         <div class="score-upload scoreboard">
 
@@ -48,5 +73,27 @@
 
         </div>
 
+        
+
+    </div>
+
+    <div class="modal-backdrop" *ngIf="pendingDelete"></div>
+
+    <div class="confirm-modal" *ngIf="pendingDelete">
+        <h3>Are you sure?</h3>
+
+        <p>
+            Deleted scores cannot be recovered.
+        </p>
+
+        <div class="modal-actions">
+            <button class="danger" (click)="confirmDelete()">
+            Delete
+            </button>
+
+            <button (click)="cancelDelete()">
+            Cancel
+            </button>
+        </div>
     </div>
 </div>
