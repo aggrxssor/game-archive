@@ -98,7 +98,7 @@ export class Scoreboard implements OnInit {
 
     this.undoTimeoutId = setTimeout(() => {
       this.lastDeleted = null;
-    }, 100000);
+    }, 10000);
   }
 
   cancelDelete(): void {
