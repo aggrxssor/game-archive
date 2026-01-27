@@ -86,7 +86,7 @@ php artisan serve
 
 # FRONTEND
 
-Create a new terminal and naviate to game-archive
+Create a new terminal and navigate to game-archive
 
 Run npm install, then ng serve
 ```
@@ -98,4 +98,4 @@ ng serve
 <img width="507" height="230" alt="image" src="https://github.com/user-attachments/assets/43bfa2b9-e7b0-4755-bd6a-26efad27d56b" />
 
 
-The website is now avaliable at http://localhost:4200/. Have fun!
+The website is now available at http://localhost:4200/. Have fun!
