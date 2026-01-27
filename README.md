@@ -61,6 +61,13 @@ You can then migrate
 ```
 php artisan migrate
 ```
+
+<br>
+<br>
+
+Create game_archive
+
+
 > The database 'game_archive' does not exist on the 'mysql' connection. Would you like to create it? (yes/no)
 
 
