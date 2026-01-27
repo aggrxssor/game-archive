@@ -1,6 +1,5 @@
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Navbar } from './components/navbar/navbar';
@@ -17,6 +16,9 @@ import { Login } from './pages/login/login';
 import { Register } from './pages/register/register';
 import { FormsModule } from '@angular/forms';
 import { Tron } from './games/tron/tron';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthTokenInterceptor } from './interceptors/auth-token-interceptor';
+import { WelcomePage } from './pages/welcome-page/welcome-page';
 
 @NgModule({
   declarations: [
@@ -33,15 +35,22 @@ import { Tron } from './games/tron/tron';
     Profiles,
     Login,
     Register,
-    Tron
+    Tron,
+    WelcomePage,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthTokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [App]
 })

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-tron',
@@ -6,7 +6,7 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
   templateUrl: './tron.html',
   styleUrl: './tron.css',
 })
-export class Tron implements AfterViewInit {
+export class Tron implements AfterViewInit, OnDestroy {
 
   /* ───────────────────── arena ───────────────────── */
 
@@ -27,11 +27,11 @@ export class Tron implements AfterViewInit {
   soundNewRound = new Audio('assets/sounds/newRound.wav');
 
   setVolume() {
-    this.soundInit.volume = 0.25;
-    this.soundCountdown.volume = 0.25;
+    this.soundInit.volume = 0.1;
+    this.soundCountdown.volume = 0.1;
     this.soundDeath.volume = 0.5;
     this.soundTurn.volume = 0.75;
-    this.soundWin.volume = 0.25;
+    this.soundWin.volume = 0.25
     this.soundNewRound.volume = 0.5;
   }
 
@@ -104,6 +104,41 @@ export class Tron implements AfterViewInit {
   lastTime = 0;
   accumulator = 0;
 
+  private rafId: number | null = null;
+
+
+
+  /* ───────────────────── input handler ───────────────────── */
+
+  private readonly keyHandler = (e: KeyboardEvent) => {
+
+    if (
+      e.key === 'ArrowUp' ||
+      e.key === 'ArrowDown' ||
+      e.key === 'ArrowLeft' ||
+      e.key === 'ArrowRight' ||
+      e.key === ' '
+    ) {
+      e.preventDefault();
+    }
+
+    if (e.key === ' ' && this.phase === 'roundOver' && !this.matchOver) {
+      this.play(this.soundNewRound);
+      this.restart();
+      return;
+    }
+
+    if (e.key === 'w') this.queueDir(this.player1, this.DIR_UP);
+    if (e.key === 'd') this.queueDir(this.player1, this.DIR_RIGHT);
+    if (e.key === 's') this.queueDir(this.player1, this.DIR_DOWN);
+    if (e.key === 'a') this.queueDir(this.player1, this.DIR_LEFT);
+
+    if (e.key === 'ArrowUp') this.queueDir(this.player2, this.DIR_UP);
+    if (e.key === 'ArrowRight') this.queueDir(this.player2, this.DIR_RIGHT);
+    if (e.key === 'ArrowDown') this.queueDir(this.player2, this.DIR_DOWN);
+    if (e.key === 'ArrowLeft') this.queueDir(this.player2, this.DIR_LEFT);
+  };
+
 
 
   /* ───────────────────── rendereles ───────────────────── */
@@ -116,36 +151,9 @@ export class Tron implements AfterViewInit {
     this.ctx = this.canvas.nativeElement.getContext('2d')!;
     this.ctx.imageSmoothingEnabled = false;
 
-    window.addEventListener('keydown', (e) => {
+    window.addEventListener('keydown', this.keyHandler);
 
-      if (
-        e.key === 'ArrowUp' ||
-        e.key === 'ArrowDown' ||
-        e.key === 'ArrowLeft' ||
-        e.key === 'ArrowRight' ||
-        e.key === ' '
-      ) {
-        e.preventDefault();
-      }
-
-      if (e.key === ' ' && this.phase === 'roundOver' && !this.matchOver) {
-        this.play(this.soundNewRound);
-        this.restart();
-        return;
-      }
-
-      if (e.key === 'w') this.queueDir(this.player1, this.DIR_UP);
-      if (e.key === 'd') this.queueDir(this.player1, this.DIR_RIGHT);
-      if (e.key === 's') this.queueDir(this.player1, this.DIR_DOWN);
-      if (e.key === 'a') this.queueDir(this.player1, this.DIR_LEFT);
-
-      if (e.key === 'ArrowUp') this.queueDir(this.player2, this.DIR_UP);
-      if (e.key === 'ArrowRight') this.queueDir(this.player2, this.DIR_RIGHT);
-      if (e.key === 'ArrowDown') this.queueDir(this.player2, this.DIR_DOWN);
-      if (e.key === 'ArrowLeft') this.queueDir(this.player2, this.DIR_LEFT);
-    });
-
-    requestAnimationFrame(this.loop);
+    this.rafId = requestAnimationFrame(this.loop);
   }
 
   loop = (t: number) => {
@@ -160,7 +168,7 @@ export class Tron implements AfterViewInit {
     }
 
     this.render();
-    requestAnimationFrame(this.loop);
+    this.rafId = requestAnimationFrame(this.loop);
   }
 
   /* ───────────────────── input ───────────────────── */
@@ -227,10 +235,64 @@ export class Tron implements AfterViewInit {
     this.phase = 'waiting';
   }
 
+  // lepesek fixed
   step() {
-    this.movePlayer(this.player1, 1);
-    this.movePlayer(this.player2, 2);
+    const p1 = this.player1;
+    const p2 = this.player2;
+
+    if (!p1.alive && !p2.alive) return;
+
+    // irany valtoztatas
+    if (p1.nextDir !== p1.dir) {
+      const diff = Math.abs(p1.nextDir - p1.dir);
+      if (diff !== 2) p1.dir = p1.nextDir;
+    }
+
+    if (p2.nextDir !== p2.dir) {
+      const diff = Math.abs(p2.nextDir - p2.dir);
+      if (diff !== 2) p2.dir = p2.nextDir;
+    }
+
+    const nx1 = p1.x + this.dx[p1.dir];
+    const ny1 = p1.y + this.dy[p1.dir];
+
+    const nx2 = p2.x + this.dx[p2.dir];
+    const ny2 = p2.y + this.dy[p2.dir];
+
+    let p1Dead = false;
+    let p2Dead = false;
+
+    // fallal
+    if (nx1 < 0 || nx1 >= this.GRID_W || ny1 < 0 || ny1 >= this.GRID_H) p1Dead = true;
+    if (nx2 < 0 || nx2 >= this.GRID_W || ny2 < 0 || ny2 >= this.GRID_H) p2Dead = true;
+
+    // vonalallal
+    if (!p1Dead && this.grid[this.idx(nx1, ny1)] !== 0) p1Dead = true;
+    if (!p2Dead && this.grid[this.idx(nx2, ny2)] !== 0) p2Dead = true;
+
+    // frontalis utkozes eseten
+    if (nx1 === nx2 && ny1 === ny2) {
+      p1Dead = true;
+      p2Dead = true;
+    }
+
+    if (p1.alive) this.grid[this.idx(p1.x, p1.y)] = 1;
+    if (p2.alive) this.grid[this.idx(p2.x, p2.y)] = 2;
+
+    p1.alive = !p1Dead;
+    p2.alive = !p2Dead;
+
+    if (p1Dead || p2Dead) {
+      this.endGame();
+      return;
+    }
+
+    p1.x = nx1;
+    p1.y = ny1;
+    p2.x = nx2;
+    p2.y = ny2;
   }
+
 
   movePlayer(p: any, trailId: number) {
     if (!p.alive) return;
@@ -262,10 +324,15 @@ export class Tron implements AfterViewInit {
   }
 
   endGame() {
+    if (this.phase === 'roundOver' || this.phase === 'gameover') return;
+
     this.play(this.soundDeath);
     this.phase = 'roundOver';
 
-    if (this.player1.alive && !this.player2.alive) {
+    if (!this.player1.alive && !this.player2.alive) {
+      this.winner = 0;
+    }
+    else if (this.player1.alive && !this.player2.alive) {
       this.winner = 1;
       this.score1++;
     }
@@ -286,6 +353,7 @@ export class Tron implements AfterViewInit {
     this.player1.started = false;
     this.player2.started = false;
   }
+
 
   resizeCanvas() {
     const c = this.canvas.nativeElement;
@@ -350,4 +418,35 @@ export class Tron implements AfterViewInit {
     this.play(this.soundInit);
   }
 
+  // sound fix login oldalon, ha tron-rol jelentkezik ki a jatekos es probalna visszajelentkezni
+
+  ngOnDestroy(): void {
+    window.removeEventListener('keydown', this.keyHandler);
+
+    if (this.countdownTimer) {
+      clearInterval(this.countdownTimer);
+      this.countdownTimer = null;
+    }
+
+    if (this.rafId !== null) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    }
+
+    const sounds = [
+      this.soundInit,
+      this.soundCountdown,
+      this.soundTurn,
+      this.soundDeath,
+      this.soundWin,
+      this.soundNewRound
+    ];
+
+    for (const s of sounds) {
+      try {
+        s.pause();
+        s.currentTime = 0;
+      } catch {}
+    }
+  }
 }

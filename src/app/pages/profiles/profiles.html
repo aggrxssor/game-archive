@@ -11,7 +11,10 @@
 
             <div class="profile-info" *ngIf="user; else notFound">
                 <h1 class="username">{{ user.username }}</h1>
+
                 <p class="join-date">Joined: {{ user.joined | date:'yyyy. MM. dd.' }}</p>
+                <p class="profile-bio" *ngIf="bio">{{ bio }}</p>
+
             </div>
 
             <ng-template #notFound>
@@ -97,14 +100,25 @@
 
                 <p class="customize-label">Avatar</p>
 
-                <div class="avatar-hover-zone" >
+                <div class="avatar-hover-zone">
                     <img [src]="'assets/images/avatars/' + selectedAvatar" class="customize-avatar-preview" (click)="toggleAvatarPicker()" alt="Avatar preview"/>
                 </div>
-                
+
                 <div class="hover-picker" *ngIf="showAvatarPicker">
-                    <img *ngFor="let avatar of avatars" [src]="'assets/images/avatars/' + avatar" class="avatar-thumbnail" (click)="selectedAvatar = avatar" alt="Avatar options"/>
+                    <img *ngFor="let avatar of avatars"
+                        [src]="'assets/images/avatars/' + avatar"
+                        class="avatar-thumbnail"
+                        (click)="selectedAvatar = avatar"
+                        alt="Avatar options"/>
                 </div>
             </div>
+
+            <textarea
+                class="bio-input"
+                [(ngModel)]="bio"
+                placeholder="Write something about yourself..."
+                maxlength="255">
+            </textarea>
 
             <div class="customize-section hover-parent" (mouseenter)="!lockBackgroundPicker && (showBackgroundPicker = true)" (mouseleave)="!lockBackgroundPicker && (showBackgroundPicker = false)">
 
@@ -114,7 +128,11 @@
                     <div class="customize-bg-preview" [style.backgroundImage]="'url(assets/images/profile_backgrounds/' + selectedBackground + ')'" (click)="toggleBackgroundPicker()"></div>
                     
                     <div class="hover-picker" *ngIf="showBackgroundPicker">
-                        <div *ngFor="let bg of backgrounds" class="bg-thumbnail" [style.backgroundImage]="'url(assets/images/profile_backgrounds/'+ bg +')'" (click)="selectedBackground = bg"></div>
+                        <div *ngFor="let bg of backgrounds"
+                            class="bg-thumbnail"
+                            [style.backgroundImage]="'url(assets/images/profile_backgrounds/'+ bg +')'"
+                            (click)="selectedBackground = bg">
+                        </div>
                     </div>
                 </div>
             </div>

@@ -10,6 +10,7 @@ import { Scoreboard } from './pages/scoreboard/scoreboard';
 import { Profiles } from './pages/profiles/profiles';
 import { Login } from './pages/login/login';
 import { Register } from './pages/register/register';
+import { WelcomePage } from './pages/welcome-page/welcome-page';
 
 const routes: Routes = [
   { path: "login", component: Login },
@@ -22,7 +23,8 @@ const routes: Routes = [
   { path: "404", component: PageNotFound },
   { path: "rules/:id", component: Rules },
   { path: "info", component: Info },
-  { path: "", redirectTo: "/home", pathMatch: "full" },
+  { path: "welcome", component: WelcomePage },
+  { path: "", redirectTo: "/welcome", pathMatch: "full" },
   { path: "**", redirectTo: "404", pathMatch: "full" }
 ];
 

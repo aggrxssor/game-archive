@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { App } from '../../app';
 
+
 @Component({
   selector: 'app-home',
   standalone: false,

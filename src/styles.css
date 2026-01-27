@@ -1,4 +1,45 @@
 /* =============================== global ================================== */
+body.bg-profiles {
+    background-image: url('/assets/images/page_backgrounds/black.jpg');
+}
+
+body.bg-register {
+    background-image: url('/assets/images/page_backgrounds/purple-green.jpg');
+}
+
+body.bg-login {
+    background-image: url('/assets/images/page_backgrounds/rusty-turquoise.jpg');
+}
+
+body.bg-games {
+    background-image: url('/assets/images/page_backgrounds/purple.jpg');
+}
+
+body.bg-scoreboard {
+    background-image: url('/assets/images/page_backgrounds/blue.jpg');
+}
+
+body.bg-home {
+    background-image: url('/assets/images/page_backgrounds/electric-blue.jpg');
+}
+
+body.bg-welcome{
+    background-image: url('/assets/images/page_backgrounds/aurora.jpg');
+}
+
+body.bg-faq{
+    background-image: url('/assets/images/page_backgrounds/dark-magenta.jpg');
+}
+
+body.bg-rules{
+    background-image: url('/assets/images/page_backgrounds/emerald-green.jpg');
+}
+
+body {
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
 
 app-root {
     min-height: 100vh;
@@ -21,7 +62,6 @@ body {
 
     position: relative;
 
-    background-image: url("./assets/images/homepage_bg.png");
     background-size: cover;
     background-position: center;
     background-repeat: repeat;
@@ -31,9 +71,12 @@ main {
     flex: 1;
 
     padding: 60px 10px 0 10px;
+
+    align-items: center;
+    justify-content: center;
 }
 
-/* =============================== hang popup =============================== */
+/* =============================== hang popup (deprecated) =============================== */
 
 .sound-popup {
     position: fixed;
@@ -57,6 +100,21 @@ main {
     background: rgba(30,30,30,0.8);
 
     text-align: center;
+}
+
+/* =============================== glassmorphism ===================================== */
+
+.glass {
+    background: rgba(26,26,26,0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+
+    background-image: url(/assets/images/noise.svg);
+    background-size: 50px 50px;
+    opacity: 0.9;
 }
 
 /* =============================== nav ===================================== */
@@ -112,9 +170,10 @@ main {
     border: 1px solid rgba(26,26,26,0.2);
     border-radius: 1px;
 
-    background: rgba(26,26,26,0.75);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(5px);
+    background: rgba(26,26,26,0.25);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(50px);
+    z-index: 5000;
 
     background-image: url(./assets/images/noise.svg);
     background-repeat: repeat;
@@ -147,7 +206,7 @@ main {
 }
 
 .dropdown-item:hover {
-    background: rgba(27,27,27,0.85);
+    background: rgba(143, 143, 143, 0.25);
 
     color: rgb(255,255,255);
     text-shadow: 0 0 8px rgba(255,255,255,1);
@@ -178,31 +237,199 @@ main {
     color: #ddd;
 }
 
-@media (min-width: 992px) {
+/* web nav min szelessege*/
+@media (min-width: 999px) {
     .dropdown:hover > .dropdown-menu {
         display: block;
     }
 }
 
+
+/* =============================== nav mobile =============================== */
+
+.mobile-hamburger {
+    display: none;
+    margin-left: 10px;
+
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(20,20,20,0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    color: rgb(199,199,199);
+    font-size: 22px;
+    line-height: 1;
+
+    border-radius: 6px;
+    padding: 8px 12px;
+
+    background-image: url(/assets/images/noise.svg);
+    background-repeat: repeat;
+    background-size: 50px 50px;
+    background-blend-mode: overlay;
+}
+
+.mobile-hamburger:hover {
+    color: rgb(255,255,255);
+    text-shadow: 0 0 8px rgba(255,255,255,1);
+    background: rgba(108,108,108,0.35);
+}
+
+.mobile-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+
+.mobile-overlay-panel {
+    width: 100%;
+    height: 100%;
+    padding: 14px 14px 18px 14px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.mobile-overlay-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mobile-back {
+    border: none;
+    background: transparent;
+    color: rgb(255,255,255);
+    font-size: 22px;
+    line-height: 1;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
+.mobile-search {
+    flex: 1;
+}
+
+.mobile-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    padding: 10px 0;
+}
+
+.mobile-link,
+.mobile-section-toggle {
+    display: block;
+    width: 100%;
+    text-align: left;
+
+    padding: 10px 8px;
+    border-radius: 6px;
+
+    color: rgb(255,255,255);
+    text-decoration: none;
+
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(26,26,26,0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    background-image: url(/assets/images/noise.svg);
+    background-repeat: repeat;
+    background-size: 50px 50px;
+    background-blend-mode: overlay;
+
+    cursor: pointer;
+}
+
+.mobile-link:hover,
+.mobile-section-toggle:hover {
+    background: rgba(108,108,108,0.25);
+    text-shadow: 0 0 8px rgba(255,255,255,1);
+}
+
+.mobile-sublist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    padding: 8px 0 0 0;
+}
+
+.mobile-sublist a {
+    flex: 1 1 auto;
+    min-width: 120px;
+}
+
+.mobile-sublist .mobile-link {
+    background: rgba(225, 225, 225, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.376);
+}
+
+.mobile-sublist .mobile-link:hover {
+    background: rgba(200,200,200,0.22);
+    text-shadow: 0 0 8px rgba(255,255,255,0.8);
+}
+
+.mobile-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.15);
+    margin: 6px 0;
+}
+
+/* navbar max szelesseg*/
+@media (max-width: 1000px) {
+    .glass-nav .navbar-brand {
+        display: none !important;
+    }
+
+    .glass-nav .navbar-toggler,
+    .glass-nav .navbar-collapse,
+    .glass-nav .navbar-nav,
+    .glass-nav .dropdown,
+    .glass-nav .profile-dropdown,
+    .glass-nav form[role="search"] {
+        display: none !important;
+    }
+
+    .mobile-hamburger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+
+
 /* ================================ csempe ===================================== */
 
 .centre-tiles {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 300px));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 400px));
     gap: 2rem;
 
-    max-width: 1300px;
+    max-width: 1800px;
     margin: auto;
+    margin-top: 2%;
     padding-bottom: 15px;
 
     justify-content: center;
+
+    vertical-align: center;
 }
 
 .card-style {
     z-index: 2;
 
-    width: 300px;
-    height: 500px;
+    width: 400px;
+    height: 650px;
+
 
     position: relative;
 
@@ -210,7 +437,7 @@ main {
     justify-content: center;
     align-items: center;
 
-    border: 1px solid rgba(37,37,37,0.733);
+    border: 1px solid rgba(37,37,37,0.25);
     border-radius: 2px;
 
     background: rgba(26,26,26,0.25);

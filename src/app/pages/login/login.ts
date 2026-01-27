@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Auth } from '../../services/auth';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LocalUsers } from '../../services/local-users';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +11,6 @@ import { LocalUsers } from '../../services/local-users';
 export class Login {
 
   authError: string | null = null;
-
   validationError: string | null = null;
   flashError = false;
 
@@ -22,52 +20,34 @@ export class Login {
   constructor(
     private auth: Auth,
     private router: Router,
-    private route: ActivatedRoute,
-    private localUsers: LocalUsers
-
+    private route: ActivatedRoute
   ) {}
 
   login(): void {
     this.validationError = null;
     this.authError = null;
 
-    if (!this.email.trim() && !this.password.trim()) {
+    if (!this.email.trim() || !this.password.trim()) {
+      this.triggerValidationError('Email and password required');
       return;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    this.auth.login(this.email, this.password).subscribe({
+      next: res => {
+        this.auth.handleAuth(res);
 
-    if (!emailRegex.test(this.email)) {
-      this.triggerError('Incorrect email');
-      return;
-    }
+        const returnUrl =
+          this.route.snapshot.queryParamMap.get('returnUrl') || '/home';
 
-    if (this.password.length < 8) {
-      this.triggerError('Incorrect email or password');
-      return;
-    }
-
-    const user = this.localUsers.validateCredentials(
-      this.email.trim().toLowerCase(),
-      this.password
-    );
-
-    if (!user) {
-      this.authError = 'Incorrect email or password';
-      this.flashError = true;
-      setTimeout(() => (this.flashError = false), 1000);
-      return;
-    }
-
-    this.auth.login(user.username);
-
-    const returnUrl =
-      this.route.snapshot.queryParamMap.get('returnUrl') || '/home';
-
-    this.router.navigateByUrl(returnUrl);
+        this.router.navigateByUrl(returnUrl);
+      },
+      error: () => {
+        this.triggerAuthError('Incorrect email or password');
+      }
+    });
   }
 
-  private triggerError(message: string): void {
+  private triggerValidationError(message: string): void {
     this.validationError = message;
     this.flashError = true;
 
@@ -76,4 +56,12 @@ export class Login {
     }, 500);
   }
 
+  private triggerAuthError(message: string): void {
+    this.authError = message;
+    this.flashError = true;
+
+    setTimeout(() => {
+      this.flashError = false;
+    }, 500);
+  }
 }

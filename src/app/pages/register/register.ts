@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 import { Auth } from '../../services/auth';
-import { ActivatedRoute, Router } from '@angular/router';
-import { LocalAuthUser, LocalUsers } from '../../services/local-users';
-import { ProfilePreferences } from '../../services/profile-preferences';
 
 @Component({
   selector: 'app-register',
@@ -21,12 +18,8 @@ export class Register {
   confirmPassword = '';
 
   constructor(
-    private auth: Auth,
-    private router: Router,
-    private route: ActivatedRoute,
-    private localUsers: LocalUsers,
-    private profiles: ProfilePreferences
-  ) { }
+    private auth: Auth
+  ) {}
 
   register(): void {
     this.validationError = null;
@@ -56,38 +49,10 @@ export class Register {
       return;
     }
 
-    if (this.localUsers.findByEmail(this.email)) {
-      this.triggerError('Email already in use');
-      return;
-    }
-
-    if (this.localUsers.findByUsername(this.username)) {
-      this.triggerError('Username already in use');
-      return;
-    }
-
-
-    const user: LocalAuthUser = {
-      username: this.username.trim(),
-      email: this.email.trim().toLowerCase(),
-      password: this.password,
-      joined: new Date().toISOString(),
-      isAdmin: false, // komment /////////////////////////////////////////
-    };
-
-    this.localUsers.add(user);
-
-    this.auth.login(user.username);
-
-    this.profiles.ensureProfile(user.username);
-
-    this.auth.login(user.username);
-
-    this.router.navigate(['/profiles', user.username]);
-
+    this.auth.register(this.username, this.email, this.password);
   }
 
-    private triggerError(message: string): void {
+  private triggerError(message: string): void {
     this.validationError = message;
     this.flashError = true;
 

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Auth } from '../../services/auth';
-import { LocalUsers } from '../../services/local-users';
-import { ProfilePreferences } from '../../services/profile-preferences';
 import { UserStatsService } from '../../services/user-stats';
+import { ProfilePreferences } from '../../services/profile-preferences';
 
 interface UserProfile {
   username: string;
   joined: string;
   avatar: string;
   background: string;
+  bio: string;
 }
 
 @Component({
@@ -23,9 +23,8 @@ export class Profiles implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public auth: Auth,
-    private localUsers: LocalUsers,
-    private prefs: ProfilePreferences, //temp
-    private stats: UserStatsService // temp
+    private prefs: ProfilePreferences, //temp (vagy lehet megsem)
+    private stats: UserStatsService,
   ) {}
 
   showAvatarPicker = false;
@@ -60,6 +59,7 @@ export class Profiles implements OnInit {
 
   currentAvatar = 'avatar1.png';
   currentBackground = 'default.jpg';
+  bio: string = '';
 
   selectedAvatar = this.currentAvatar;
   selectedBackground = this.currentBackground;
@@ -78,47 +78,64 @@ export class Profiles implements OnInit {
 
       this.username = username;
 
-      // 🔑 identity check
-      const authUser = this.localUsers.findByUsername(username);
-      if (!authUser) {
-        this.user = undefined;
-        this.resetStats();
-        return;
-      }
+      this.auth.getProfile(username).subscribe({
+        next: apiUser => {
+          this.prefs.get(apiUser.username).subscribe({
+            next: prefs => {
+              const defaults = this.prefs.defaults();
 
-      // Ensure profile prefs exist
-      this.prefs.ensureProfile(authUser.username);
+              this.isPrivateProfile = prefs.isPrivate ?? false;
 
-      const saved = this.prefs.get(authUser.username)!;
-      const defaults = this.prefs.defaults();
-      this.isPrivateProfile = saved.isPrivate ?? false;
+              this.user = {
+                username: apiUser.username,
+                joined: apiUser.joined,
+                avatar: prefs.avatar ?? defaults.avatar,
+                background: prefs.background ?? defaults.background,
+                bio: prefs.bio ?? ''
+              };
 
-      // Build profile
-      this.user = {
-        username: authUser.username,
-        joined: authUser.joined,
-        avatar: saved.avatar ?? defaults.avatar,
-        background: saved.background ?? defaults.background
-      };
+              this.currentAvatar = this.user.avatar;
+              this.currentBackground = this.user.background;
+              this.selectedAvatar = this.currentAvatar;
+              this.selectedBackground = this.currentBackground;
+              this.bio = prefs.bio ?? '';
 
-      this.currentAvatar = this.user.avatar;
-      this.currentBackground = this.user.background;
-      this.selectedAvatar = this.currentAvatar;
-      this.selectedBackground = this.currentBackground;
+              this.computeOwnership();
+              this.recomputeStats();
+            },
+            error: () => {
+              const defaults = this.prefs.defaults();
 
-      this.computeOwnership();
-      this.recomputeStats();
+              this.user = {
+                username: apiUser.username,
+                joined: apiUser.joined,
+                avatar: defaults.avatar,
+                background: defaults.background,
+                bio: ''
+              };
+
+              this.currentAvatar = defaults.avatar;
+              this.currentBackground = defaults.background;
+              this.selectedAvatar = defaults.avatar;
+              this.selectedBackground = defaults.background;
+              this.bio = '';
+              
+              this.computeOwnership();
+              this.recomputeStats();
+            }
+          });
+        },
+        error: () => {
+          this.user = undefined;
+        }
+      });
     });
 
-    // React to auth changes
-    this.auth.currentUser$.subscribe(() => {
+    this.auth.username$.subscribe(() => {
       this.computeOwnership();
     });
   }
 
-  // -------------------------
-  // Ownership & stats
-  // -------------------------
 
   private computeOwnership(): void {
     this.isOwnProfile = false;
@@ -129,37 +146,25 @@ export class Profiles implements OnInit {
     }
   }
 
-  private resetStats(): void {
-    this.totalGames = 0;
-    this.bestScore = undefined;
-    this.recentScores = [];
-  }
-
   private recomputeStats(): void {
-    if (!this.user) {
-      this.totalGames = 0;
-      this.bestScore = undefined;
-      this.recentScores = [];
-      return;
-    }
+    if (!this.user) return;
 
-    const userStats = this.stats.get(this.user.username);
-
-    this.totalGames = userStats.gamesPlayed;
-
-    if (userStats.scores.length > 0) {
-      this.bestScore = Math.max(...userStats.scores.map(s => s.score));
-      this.recentScores = userStats.scores
-        .slice(-10)
-        .reverse()
-        .map(s => ({
-          gameId: s.gameId,
-          score: s.score,
-        }));
-    } else {
-      this.bestScore = undefined;
-      this.recentScores = [];
-    }
+    this.stats.getStats(this.user.username).subscribe({
+      next: (data: {
+        gamesPlayed: number;
+        bestScore: number | null;
+        recentScores: { gameId: string; score: number }[];
+      }) => {
+        this.totalGames = data.gamesPlayed;
+        this.bestScore = data.bestScore ?? undefined;
+        this.recentScores = data.recentScores;
+      },
+      error: () => {
+        this.totalGames = 0;
+        this.bestScore = undefined;
+        this.recentScores = [];
+      }
+    });
   }
 
   toggleAvatarPicker(): void {
@@ -172,14 +177,12 @@ export class Profiles implements OnInit {
       this.lockBackgroundPicker = false;
     }
   }
-
   closeAvatarPicker(): void{
     this.showAvatarPicker = false;
     this.lockAvatarPicker = false;
     this.showBackgroundPicker = false;
     this.lockBackgroundPicker = false;
   }
-
   toggleBackgroundPicker(): void {
     if (this.lockBackgroundPicker) {
       this.closeBackgroundPicker();
@@ -190,29 +193,26 @@ export class Profiles implements OnInit {
       this.lockAvatarPicker = false;
     }
   }
-
   closeBackgroundPicker(): void{
     this.showBackgroundPicker = false;
     this.lockBackgroundPicker = false;
     this.showAvatarPicker = false;
     this.lockAvatarPicker = false;
   }
-
   saveProfileCustomization(): void {
     if (!this.user || !this.isOwnProfile) return;
 
-    // commit draft → current
     this.currentAvatar = this.selectedAvatar;
     this.currentBackground = this.selectedBackground;
 
-    // persist
-    this.prefs.save(this.user.username, {
-    avatar: this.currentAvatar,
-    background: this.currentBackground,
-    isPrivate: this.isPrivateProfile,
-  });
+    this.prefs.save({
+      avatar: this.currentAvatar,
+      background: this.currentBackground,
+      bio: this.bio,
+      isPrivate: this.isPrivateProfile,
+    }).subscribe();
 
-    // close UI
+
     this.showBgPicker = false;
     this.closeAvatarPicker();
     this.closeBackgroundPicker();

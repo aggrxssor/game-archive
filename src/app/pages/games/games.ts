@@ -20,7 +20,7 @@ export class Games implements OnInit {
   private route: ActivatedRoute,
   private router: Router,
   public auth: Auth,
-  private gameData: GameData //temp
+  private gameData: GameData
 ) {}
 
   ngOnInit(): void {

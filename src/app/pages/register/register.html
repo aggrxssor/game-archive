@@ -3,46 +3,50 @@
     <div class="glass-card register-card">
 
         <h1>Register</h1>
+        <form (ngSubmit)="register()">
 
-        <input
-        type="email"
-        class="register-input"
-        placeholder="Email"
-        [(ngModel)]="email"
-        />
-
-        <input
-        type="text"
-        placeholder="Username"
-        class="register-input"
-        [(ngModel)]="username"
-        />
-
-        <input
-        type="password"
-        class="register-input"
-        placeholder="Password"
-        [(ngModel)]="password"
-        />
-
-        <input
-        type="password"
-        placeholder="Confirm password"
-        class="register-input"
-        [(ngModel)]="confirmPassword"
-        />
-
-        <div class="validation-warning" *ngIf="validationError">
-            <span class="warning-icon">⚠</span>
-            <span class="warning-text">{{ validationError }}</span>
-        </div>
-        <button
+            <input
+            type="email"
+            class="register-input"
+            placeholder="Email"
+            [(ngModel)]="email"
+            name="email"
+            />
+            
+            <input
+            type="text"
+            placeholder="Username"
+            class="register-input"
+            [(ngModel)]="username"
+            name="username"
+            />
+            
+            <input
+            type="password"
+            class="register-input"
+            placeholder="Password"
+            [(ngModel)]="password"
+            name="password"
+            />
+            
+            <input
+            type="password"
+            placeholder="Confirm password"
+            class="register-input"
+            [(ngModel)]="confirmPassword"
+            name="confirmPassword"
+            />
+            
+            <div class="validation-warning" *ngIf="validationError">
+                <span class="warning-icon">⚠</span>
+                <span class="warning-text">{{ validationError }}</span>
+            </div>
+            <button
             class="register-btn"
-            [class.error-flash]="flashError"
-            (click)="register()">
-            Register
-        </button>
-
+            [class.error-flash]="flashError">Register
+            </button>
+        </form>
+        
         <p class="login-hint">
         Already have an account?
         <a routerLink="/login">Login</a>

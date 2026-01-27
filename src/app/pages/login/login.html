@@ -3,30 +3,37 @@
 
         <h1>Login</h1>
 
+        <form (ngSubmit)="login()">
+
         <input
-        type="email"
-        placeholder="E-mail"
-        class="login-input"
-        [(ngModel)]="email"
+            type="email"
+            placeholder="E-mail"
+            class="login-input"
+            [(ngModel)]="email"
+            name="email"
         />
 
         <input
-        type="password"
-        placeholder="Password"
-        class="login-input"
-        [(ngModel)]="password"
+            type="password"
+            placeholder="Password"
+            class="login-input"
+            [(ngModel)]="password"
+            name="password"
         />
 
-        <div class="validation-warning" *ngIf="validationError ||  authError">
+        <div class="validation-warning" *ngIf="validationError || authError">
             <span class="warning-icon">⚠</span>
             <span class="warning-text">{{ validationError || authError }}</span>
         </div>
+
         <button
+            type="submit"
             class="login-btn"
-            [class.error-flash]="flashError"
-            (click)="login()">
+            [class.error-flash]="flashError">
             Login
         </button>
+
+        </form>
 
         <p class="register-hint">
         Don’t have an account yet?

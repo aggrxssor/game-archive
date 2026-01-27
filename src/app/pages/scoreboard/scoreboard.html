@@ -2,16 +2,15 @@
 
     <h1>Space Shooter Leaderboard</h1>
 
-
     <div class="scoreboard-layout">
 
         <table class="scoreboard">
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Player</th>
-                    <th>Score</th>
-                    <th *ngIf="auth.isAdmin">Delete score</th>
+                <th>#</th>
+                <th>Player</th>
+                <th>Score</th>
+                <th *ngIf="auth.isAdmin">Delete score</th>
                 </tr>
             </thead>
 
@@ -38,6 +37,7 @@
             </tbody>
         </table>
 
+        <!-- undo stuff -->
         <div class="undo-banner" *ngIf="lastDeleted">
             <span>
                 Score deleted.
@@ -48,6 +48,7 @@
             </button>
         </div>
 
+        <!-- score subm -->
         <div class="score-upload scoreboard">
 
             <h2>Submit score</h2>
@@ -65,15 +66,17 @@
                 {{ auth.isLoggedIn ? 'Submit' : 'Login to submit' }}
             </button>
 
+            <p class="submit-error" *ngIf="submitError">
+                {{ submitError }}
+            </p>
+
             <p class="score-hint">
                 {{ auth.isLoggedIn
-                    ? 'Submit your score to the leaderboard.'
-                    : 'You must be logged in to submit a score.' }}
+                ? 'Submit your score to the leaderboard.'
+                : 'You must be logged in to submit a score.' }}
             </p>
 
         </div>
-
-        
 
     </div>
 
@@ -83,17 +86,18 @@
         <h3>Are you sure?</h3>
 
         <p>
-            Deleted scores cannot be recovered.
+        Deleted scores cannot be recovered.
         </p>
 
         <div class="modal-actions">
             <button class="danger" (click)="confirmDelete()">
-            Delete
+                Delete
             </button>
 
             <button (click)="cancelDelete()">
-            Cancel
+                Cancel
             </button>
         </div>
     </div>
+
 </div>

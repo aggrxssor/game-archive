@@ -1,13 +1,11 @@
 <div class="game-page">
 
-  <!-- FULLSCREEN GAME MODE -->
   <ng-container *ngIf="game?.id === 'tron' && auth.isLoggedIn; else normalPage">
     <div class="game-stage">
       <app-tron></app-tron>
     </div>
   </ng-container>
 
-  <!-- NORMAL WEBSITE MODE -->
   <ng-template #normalPage>
 
     <div *ngIf="game; else noGame">

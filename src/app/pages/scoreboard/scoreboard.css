@@ -178,6 +178,13 @@ h1{
     opacity: 0.75;
 }
 
+.submit-error {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #ff8c8c;
+    opacity: 0.9;
+}
+
 .undo-banner {
     position: fixed;
 

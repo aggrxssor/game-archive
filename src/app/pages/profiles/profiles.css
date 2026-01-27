@@ -4,10 +4,6 @@
   padding: 40px 20px;
 }
 
-
-
-
-
 .profile-back-tile {
   width: 100%;
   min-height: 80vh;
@@ -23,10 +19,6 @@
   background-position: center;
   background-repeat: no-repeat;
 }
-
-
-
-
 
 .profile-header {
   position: relative;
@@ -56,6 +48,28 @@
   background: rgba(108, 108, 108, 0.55);
 }
 
+.profile-bio {
+  margin-top: 6px;
+  max-width: 420px;
+  font-size: 0.95rem;
+  opacity: 0.85;
+  line-height: 1.3;
+}
+
+
+.bio-input {
+  width: 100%;
+  min-height: 90px;
+  resize: none;
+
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+
+  color: white;
+  padding: 8px;
+  font-family: inherit;
+}
 
 
 

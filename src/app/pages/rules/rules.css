@@ -4,6 +4,8 @@
     justify-content: center;
     align-items: center;
     padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
 }
 .rules-card{
     width: 100%;
@@ -30,4 +32,9 @@
     background-blend-mode: overlay;
 
     color: rgb(199, 199, 199);
+}
+
+#notfound{
+    display: flex;
+    flex-direction: horizontal;
 }
