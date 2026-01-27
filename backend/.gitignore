@@ -1,0 +1,32 @@
+# --------------------
+# Laravel / PHP
+# --------------------
+/vendor
+/node_modules
+
+# Environment files (NEVER COMMIT)
+
+
+# Storage (runtime files)
+/storage/*.key
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+
+# Bootstrap cache
+/bootstrap/cache/*
+
+# --------------------
+# IDE / OS
+# --------------------
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# --------------------
+# Testing / coverage
+# --------------------
+/coverage
+.phpunit.result.cache
