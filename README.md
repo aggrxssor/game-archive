@@ -1,3 +1,9 @@
+A feladat dokumentációja a "documents" mappában található.
+<br>
+<br>
+<br>
+
+
 Game Archive Project
 
 ## 🛠️ Installation & Setup Guide
