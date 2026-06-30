@@ -1,4 +1,39 @@
-A feladat dokumentációja a "documents" mappában található.
+# GALLERY
+
+<table>
+<tr>
+<td><img width="720" alt="game_archive_register" src="https://github.com/user-attachments/assets/f286fecb-b0cf-47ea-980e-7a7064056c0d" /></td>
+<td><img width="720" alt="game_archive_login" src="https://github.com/user-attachments/assets/3846743f-5e9f-4a30-a001-e81c2e46b6f3" /></td>
+</tr>
+
+<tr>
+<td><img width="720" alt="game_archive_profile" src="https://github.com/user-attachments/assets/ad78cca9-c36c-4bf5-9a38-e1bf8b225d87" /></td>
+<td><img width="720" alt="game_archive_welcome" src="https://github.com/user-attachments/assets/5aafbe11-8f98-44c4-a7be-cd2494de28ca" /></td>
+</tr>
+
+<tr>
+<td><img width="720" alt="game_archive" src="https://github.com/user-attachments/assets/b2235dd2-0b57-4326-b5ad-e6bc5ccae453" /></td>
+<td><img width="720" alt="game_archive_tron" src="https://github.com/user-attachments/assets/4d332904-b26d-450a-80ea-ef739e0cdb66" /></td>
+</tr>
+
+<tr>
+<td><img width="720" alt="game_archive_rules" src="https://github.com/user-attachments/assets/9f8ae7a3-e71f-4a46-a401-1d50724df253" /></td>
+<td><img width="720" alt="game_archive_scoreboard" src="https://github.com/user-attachments/assets/c5f5d6c4-e260-444f-8e10-8087df6c2758" /></td>
+</tr>
+</table>
+
+# GIFS
+
+<p align="center">
+  <img width="720" alt="game_archive_games" src="https://github.com/user-attachments/assets/e8b4bd8b-62f3-484e-816a-b9db3059a948" />
+</p>
+
+<p align="center">
+  <img width="720" alt="game_archive_faq" src="https://github.com/user-attachments/assets/e91d86f4-8986-439c-9264-a434657e3c2a" />
+</p>
+
+
+
 <br>
 <br>
 <br>
